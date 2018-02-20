@@ -111,7 +111,7 @@ namespace ADMPlugin
 
             if (dataVersionModel == null)
                 return true;
-            
+
             var dataVersion = dataVersionModel.AdmVersion;
             var dataMajorVersion = dataVersion.Substring(0, currentVersion.IndexOf('.'));
 
@@ -133,7 +133,7 @@ namespace ADMPlugin
             var catalog = ImportData<Catalog>(path, CatalogAdm);
             var documents = _documentsImporter.ImportDocuments(path, DocumentAdm, catalog);
             var proprietaryValues = ImportData<List<ProprietaryValue>>(path, ProprietaryValuesAdm);
-            var referenceLayers = ImportReferenceLayers(path, ReferencelayersAdm); 
+            var referenceLayers = ImportReferenceLayers(path, ReferencelayersAdm);
 
             var applicationDataModel = new ApplicationDataModel
             {
@@ -143,7 +143,9 @@ namespace ADMPlugin
                 ReferenceLayers = referenceLayers
             };
 
-            return new[] { applicationDataModel };
+			var adms = new List<ApplicationDataModel>();
+			adms.Add(applicationDataModel);
+			return adms;
         }
 
         private IEnumerable<ReferenceLayer> ImportReferenceLayers(string path, string filename)
@@ -171,7 +173,7 @@ namespace ADMPlugin
         {
             _protobufReferenceLayerSerializer.Export(filePath, fileName, referenceLayers);
         }
-        
+
         private T ImportData<T>(string path, string searchPattern)
         {
             var files = Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories);
@@ -234,6 +236,11 @@ namespace ADMPlugin
             using (var textReader = new JsonTextReader(streamReader))
             {
                 return Serializer.Deserialize<T>(textReader);
+            }
+        }
+    }
+}
+izer.Deserialize<T>(textReader);
             }
         }
     }
