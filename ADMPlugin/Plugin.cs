@@ -143,8 +143,10 @@ namespace ADMPlugin
                 ReferenceLayers = referenceLayers
             };
 
-			var adms = new List<ApplicationDataModel>();
-			adms.Add(applicationDataModel);
+			var adms = new List<ApplicationDataModel>
+			{
+				applicationDataModel
+			};
 			return adms;
         }
 
@@ -236,11 +238,6 @@ namespace ADMPlugin
             using (var textReader = new JsonTextReader(streamReader))
             {
                 return Serializer.Deserialize<T>(textReader);
-            }
-        }
-    }
-}
-izer.Deserialize<T>(textReader);
             }
         }
     }
